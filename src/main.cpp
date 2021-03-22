@@ -1,16 +1,10 @@
 #include <Arduino.h>
 
-#define tx 
-#define stm32
-
-
-//#define rx
-//#define esp32
-
-
 #include <SPI.h>
 #include "SX128XLT.h"
 #include "ProgramLT_Definitions.h"
+
+#include "pin_def.h"
 
 #include "Settings.h"
 
@@ -82,6 +76,7 @@ void setup() {
   #endif
 
   #ifdef rx
+
     pinMode(LED1, OUTPUT);                        //setup pin as output for indicator LED
     led_Flash(2, 125);                            //two quick LED flashes to indicate program start
 
@@ -138,11 +133,13 @@ void setup() {
     Serial.println(RXBUFFER_SIZE);
     Serial.println();
   #endif
+
 }
 
 void loop() {
-
+  
   #ifdef tx
+
     Serial.println(F("Start Test Sequence"));
     Serial.print(F("Start Packet> "));
 
@@ -174,12 +171,9 @@ void loop() {
 
     Serial.println(F("Finished Test Sequence"));
     Serial.println();
-
-    //delay(500);
   #endif
 
   #ifdef rx
-
     RXPacketL = LT.receiveAddressed(RXBUFFER, RXBUFFER_SIZE, 15000, WAIT_RX); //wait for a packet to arrive with 15seconds (15000mS) timeout
 
     Serial.println(RXBUFFER[0]);
